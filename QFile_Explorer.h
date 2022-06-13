@@ -3,7 +3,8 @@
 #include <QtCore>
 #include <QWidget>
 #include <QMessageBox>
-#include <QAbstractItemModel>
+#include <QFileDialog>
+#include <QDir>
 
 class QFile_Explorer : public QMainWindow
 {
@@ -15,16 +16,17 @@ public:
 
 
 private slots:
-	void DirectoryChanged(const QString& path);
-	void FileChanged(const QString& path);
+	void NotifieChanegs();
 	void EnterPath();
 	void SaveLogs();
 
 private:
-	void DispalyContents(QString& path);
-	Ui::QtWidgetsFile_ExplorerClass ui;
+	QString dirPath, filePath;
 	QFileSystemWatcher* watcher;
-	QString dirpath, filepath;
 
+	QStringList newList, oldList;
+	QStringList RefreshContents(QString& dirpath);
+
+	Ui::QtWidgetsFile_ExplorerClass* ui = new Ui::QtWidgetsFile_ExplorerClass;
 
 };

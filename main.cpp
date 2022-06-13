@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
 
         QFile_Explorer* QExplorer = new QFile_Explorer;
 
-
         QExplorer->show();
 
         return QApp->exec();
