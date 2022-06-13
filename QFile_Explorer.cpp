@@ -24,13 +24,16 @@ QFile_Explorer::~QFile_Explorer() {
 void QFile_Explorer::EnterPath(){
 
 	ui->Output_Wnd->clear();
-	oldList.erase(newList.begin(), newList.end());
-
+	
+	watcher->removePaths(oldList);
+    oldList.clear();
+	
 	//display the input window & set file path to top input_wnd
 	dirPath = QFileDialog::getExistingDirectory(this, " Choose the directory to be monitored : ", QDir::homePath());
 	ui->Input_Wnd->setText(dirPath);
 	
-	// Refrresh contents to be monitored & add paths to watcherr
+	// Refrresh contents to be monitored & add paths to watcher
+
 	oldList = RefreshContents(dirPath);
 	oldList.sort();
 
@@ -53,7 +56,6 @@ void QFile_Explorer::EnterPath(){
 
 void QFile_Explorer::NotifieChanegs()
 {
-	// trochę niebezpieczny sposób przrekazania śćieżki
 
 	dirPath = ui->Input_Wnd->text();
 	newList = RefreshContents(dirPath);
@@ -87,16 +89,11 @@ void QFile_Explorer::NotifieChanegs()
 		}
 
 	}
-	else if (oldList == newList) {
+	else{
 
 		ui->Output_Wnd->setTextColor(Qt::darkGreen);
 		ui->Output_Wnd->append("  [!] File was modified  ");
 
-	}
-	else {
-
-		ui->Output_Wnd->setTextColor(Qt::darkMagenta);
-		ui->Output_Wnd->append("[!] Other Modification  ");
 	}
 
 	ui->Output_Wnd->setTextColor(Qt::black);
@@ -111,7 +108,6 @@ QStringList QFile_Explorer::RefreshContents(QString& dirpath) {
 	QDir dir = dir.toNativeSeparators(dirpath);
 	dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
-
 
 	// Iterate throught folder contents and add paths to the monitoring system ;
 	// Add main directory to watch
