@@ -106,11 +106,12 @@ void QFile_Explorer::NotifieChanegs()
 }
 
 QStringList QFile_Explorer::RefreshContents(QString& dirpath) {
-
-	QDir dir(dirpath);
+	
 	QStringList list;
+	QDir dir = dir.toNativeSeparators(dirpath);
 	dir.setSorting(QDir::SortFlag::DirsFirst | QDir::SortFlag::Name);
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+
 
 	// Iterate throught folder contents and add paths to the monitoring system ;
 	// Add main directory to watch
