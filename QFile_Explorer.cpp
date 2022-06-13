@@ -71,7 +71,7 @@ void QFile_Explorer::NotifieChanegs()
 		foreach(QString name, intersection)
 		{
 			ui->Output_Wnd->setTextColor(Qt::red);
-			ui->Output_Wnd->append("  [!] File was delited"  + name);
+			ui->Output_Wnd->append("  [!] File was delited : "  + name);
 		}
 		
 	}
@@ -83,7 +83,7 @@ void QFile_Explorer::NotifieChanegs()
 		foreach (QString name ,intersection)
 		{
 			ui->Output_Wnd->setTextColor(Qt::darkBlue);
-			ui->Output_Wnd->append("  [!] File was created  " + name);
+			ui->Output_Wnd->append("  [!] File was created : " + name);
 		}
 
 	}
